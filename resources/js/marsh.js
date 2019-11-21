@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Nav from './project/nav.js';
+import Note from './project/note.js';
 import Home from './project/home.js';
 import Register from './project/register.js';
 import NotFound from './project/notfound.js';
@@ -13,6 +13,7 @@ ReactDOM.render(
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/register" component={Register} />
+                <Route path="/note" component={Note} />
                 <Route component={NotFound} />
             </Switch>
         </div>

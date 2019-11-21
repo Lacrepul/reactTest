@@ -3,35 +3,37 @@ import {Link, BrowserRouter}  from 'react-router-dom';
 
 export default class Home extends React.Component{
     
-        constructor(props){
-           super(props);
-           this.state = {
-               email : '',
-               password: '',
-           }
+    constructor(props){
+        super(props);
+        this.state = {
+            email : '',
+            password: '',
         }
+    }
     
-       async onSubmit(e){
-          e.preventDefault();
-          //alert(JSON.stringify({'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content}));
-          const {email , password} = this.state;
-          let json = JSON.stringify({email , password});
-            let response = await fetch('api/login', {
-              headers : 
-              {'Content-Type': 'application/json',
-              'Accept': 'application/json'},
-              method: 'POST',
-              body: 
-              JSON.stringify({email , password})
-            });
-          let result = await response.json();
+    async onSubmit(e){
+        e.preventDefault();
+        const {email , password} = this.state;
+
+        let response = await fetch('login', {
+        headers : 
+        {'Content-Type': 'application/json',
+        'Accept': 'application/json'},
+        method: 'POST',
+        body: 
+        JSON.stringify({email , password})
+        })
+        if (response.status != 200){
+        return alert('НЕПРАВИЛЬНЫЙ ЛОГИН\ПАРОЛЬ');
+        }else{
+            this.props.history.push('/note');
         }
-
-
-        onChange(e){
-            const {name, value} = e.target;
-            this.setState({[name]: value});
-         }
+    }
+        
+    onChange(e){
+        const {name, value} = e.target;
+        this.setState({[name]: value});
+        }
 
     render(){
         return <div id="container" className="container">

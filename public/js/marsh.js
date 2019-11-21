@@ -36784,7 +36784,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _project_nav_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./project/nav.js */ "./resources/js/project/nav.js");
+/* harmony import */ var _project_note_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./project/note.js */ "./resources/js/project/note.js");
 /* harmony import */ var _project_home_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./project/home.js */ "./resources/js/project/home.js");
 /* harmony import */ var _project_register_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./project/register.js */ "./resources/js/project/register.js");
 /* harmony import */ var _project_notfound_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./project/notfound.js */ "./resources/js/project/notfound.js");
@@ -36804,6 +36804,9 @@ react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_
 }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
   path: "/register",
   component: _project_register_js__WEBPACK_IMPORTED_MODULE_5__["default"]
+}), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+  path: "/note",
+  component: _project_note_js__WEBPACK_IMPORTED_MODULE_3__["default"]
 }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
   component: _project_notfound_js__WEBPACK_IMPORTED_MODULE_6__["default"]
 })))), document.getElementById("app"));
@@ -36871,21 +36874,16 @@ function (_React$Component) {
   _createClass(Home, [{
     key: "onSubmit",
     value: function onSubmit(e) {
-      var _this$state, email, password, json, response, result;
+      var _this$state, email, password, response;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function onSubmit$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              e.preventDefault(); //alert(JSON.stringify({'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content}));
-
+              e.preventDefault();
               _this$state = this.state, email = _this$state.email, password = _this$state.password;
-              json = JSON.stringify({
-                email: email,
-                password: password
-              });
-              _context.next = 5;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('api/login', {
+              _context.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('login', {
                 headers: {
                   'Content-Type': 'application/json',
                   'Accept': 'application/json'
@@ -36897,15 +36895,20 @@ function (_React$Component) {
                 })
               }));
 
-            case 5:
+            case 4:
               response = _context.sent;
-              _context.next = 8;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(response.json());
 
-            case 8:
-              result = _context.sent;
+              if (!(response.status != 200)) {
+                _context.next = 9;
+                break;
+              }
+
+              return _context.abrupt("return", alert('НЕПРАВИЛЬНЫЙ ЛОГИН\ПАРОЛЬ'));
 
             case 9:
+              this.props.history.push('/note');
+
+            case 10:
             case "end":
               return _context.stop();
           }
@@ -36968,16 +36971,16 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/project/nav.js":
-/*!*************************************!*\
-  !*** ./resources/js/project/nav.js ***!
-  \*************************************/
+/***/ "./resources/js/project/note.js":
+/*!**************************************!*\
+  !*** ./resources/js/project/note.js ***!
+  \**************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Nav; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Note; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
@@ -37002,29 +37005,25 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Nav =
+var Note =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(Nav, _React$Component);
+  _inherits(Note, _React$Component);
 
-  function Nav() {
-    _classCallCheck(this, Nav);
+  function Note() {
+    _classCallCheck(this, Note);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Nav).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(Note).apply(this, arguments));
   }
 
-  _createClass(Nav, [{
+  _createClass(Note, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/"
-      }, "\u0413\u043B\u0430\u0432\u043D\u0430\u044F"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/register"
-      }, "Register"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "NOTEBOOK");
     }
   }]);
 
-  return Nav;
+  return Note;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 
