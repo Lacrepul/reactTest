@@ -14,7 +14,7 @@ export default class Note extends React.Component{
               currentProduct: null
           }
           this.handleAddProduct = this.handleAddProduct.bind(this);
-          //this.handleDelete = this.handleDelete.bind(this);
+          this.handleDelete = this.handleDelete.bind(this);
         }
         /*componentDidMount() is a lifecycle method
          * that gets called after the component is rendered
@@ -33,7 +33,7 @@ export default class Note extends React.Component{
               /*Fetch API for post request */
           handleAddProduct(product) {
            
-              product.price = Number(product.price);
+              //product.price = Number(product.price);
       
               fetch( 'api/products/', {
                   method:'post',
@@ -41,7 +41,6 @@ export default class Note extends React.Component{
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                   },
-                   
                   body: JSON.stringify(product)
               })
               .then(response => {
@@ -63,7 +62,7 @@ export default class Note extends React.Component{
               return this.state.products.map(product => {
                   return (
                         <li key={product.id} onClick={() =>this.handleClick(product)}>
-                            <input type="button" className="btn btn-outline-secondary" style={{width:200}} id="inputNameId" name="inputNameName" value={product.title} readOnly></input>
+                            <input type="button" className="btn btn-outline-secondary" style={{width:200}} id="inputNameId" name="inputNameName" value={product.name} readOnly></input>
                         </li>
                   );
               })
@@ -74,21 +73,21 @@ export default class Note extends React.Component{
             this.setState({currentProduct:product});  
           }
       
-          /*handleDelete() {
+          handleDelete() {
           
-              const currentProduct = this.state.currentProduct;
-              fetch( 'api/products/' + this.state.currentProduct.id, 
-                  { method: 'delete' })
-                  .then(response => {
-      
-                    var array = this.state.products.filter(function(item) {
-                    return item !== currentProduct
-                  });
-                
-                  this.setState({ products: array, currentProduct: null});
-             
-              });
-          }*/
+            const currentProduct = this.state.currentProduct;
+            fetch( 'api/products/' + this.state.currentProduct.id, 
+                { method: 'delete' })
+                .then(response => {
+    
+                var array = this.state.products.filter(function(item) {
+                return item !== currentProduct
+                });
+            
+                this.setState({ products: array, currentProduct: null});
+            
+                });
+          }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     render(){
         return <div>
@@ -107,12 +106,13 @@ export default class Note extends React.Component{
                         <div className="row" style={{marginTop:100}}>
 
                             <div className="col-5" >
-                                <AddProduct onAdd={this.handleAddProduct} />
+
                                 <ul className="list-group">
                                     { this.renderProducts() }
                                 </ul>
                             </div> 
-
+                            <button onClick={() =>this.handleDelete()}>Delete</button>
+                            <AddProduct onAdd={this.handleAddProduct} />
                             <div className="col-7">
                                 <div className="btn btn-success btn-block" id="textareaHeader">Your Note</div>
                                 <ul className="list-group">

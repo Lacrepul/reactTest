@@ -36858,10 +36858,8 @@ function (_Component) {
 
     _this.state = {
       newProduct: {
-        title: '',
-        description: '',
-        price: 0,
-        availability: 0
+        name: '',
+        detail: ''
       }
     }; //Boilerplate code for binding methods with `this`
 
@@ -36900,32 +36898,22 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var divStyle = {
-        /*Code omitted for brevity */
-      };
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " Add new product "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        style: divStyle
-      }, "/*when Submit button is pressed, the control is passed to *handleSubmit method */", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " Add new product "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Title:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " name:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "string",
         onChange: function onChange(e) {
-          return _this2.handleInput('title', e);
+          return _this2.handleInput('name', e);
         }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Description:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " detail:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: function onChange(e) {
-          return _this2.handleInput('description', e);
-        }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Price:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        onChange: function onChange(e) {
-          return _this2.handleInput('price', e);
+          return _this2.handleInput('detail', e);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Submit"
-      }))));
+      })));
     }
   }]);
 
@@ -36954,19 +36942,14 @@ __webpack_require__.r(__webpack_exports__);
 
 var Product = function Product(_ref) {
   var product = _ref.product;
-  var divStyle = {}
-  /*code omitted for brevity */
-  //if the props product is null, return Product doesn't exist
-  ;
 
+  //if the props product is null, return Product doesn't exist
   if (!product) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: divStyle
-    }, "  Product Doesnt exist ");
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "  Product Doesnt exist ");
   } //Else, display the product data
 
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, product.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Delete"));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, product.detail));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Product);
@@ -37218,8 +37201,8 @@ function (_React$Component) {
       products: [],
       currentProduct: null
     };
-    _this.handleAddProduct = _this.handleAddProduct.bind(_assertThisInitialized(_this)); //this.handleDelete = this.handleDelete.bind(this);
-
+    _this.handleAddProduct = _this.handleAddProduct.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     return _this;
   }
   /*componentDidMount() is a lifecycle method
@@ -37249,7 +37232,7 @@ function (_React$Component) {
     value: function handleAddProduct(product) {
       var _this3 = this;
 
-      product.price = Number(product.price);
+      //product.price = Number(product.price);
       fetch('api/products/', {
         method: 'post',
         headers: {
@@ -37292,7 +37275,7 @@ function (_React$Component) {
           },
           id: "inputNameId",
           name: "inputNameName",
-          value: product.title,
+          value: product.name,
           readOnly: true
         }));
       });
@@ -37305,25 +37288,31 @@ function (_React$Component) {
         currentProduct: product
       });
     }
-    /*handleDelete() {
-    
-        const currentProduct = this.state.currentProduct;
-        fetch( 'api/products/' + this.state.currentProduct.id, 
-            { method: 'delete' })
-            .then(response => {
-                     var array = this.state.products.filter(function(item) {
-              return item !== currentProduct
-            });
-          
-            this.setState({ products: array, currentProduct: null});
-       
+  }, {
+    key: "handleDelete",
+    value: function handleDelete() {
+      var _this5 = this;
+
+      var currentProduct = this.state.currentProduct;
+      fetch('api/products/' + this.state.currentProduct.id, {
+        method: 'delete'
+      }).then(function (response) {
+        var array = _this5.state.products.filter(function (item) {
+          return item !== currentProduct;
         });
-    }*/
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        _this5.setState({
+          products: array,
+          currentProduct: null
+        });
+      });
+    } //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   }, {
     key: "render",
     value: function render() {
+      var _this6 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         action: "logout",
         method: "POST"
@@ -37347,11 +37336,15 @@ function (_React$Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        onAdd: this.handleAddProduct
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "list-group"
-      }, this.renderProducts())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.renderProducts())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this6.handleDelete();
+        }
+      }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        onAdd: this.handleAddProduct
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-7"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "btn btn-success btn-block",

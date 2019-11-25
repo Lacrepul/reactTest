@@ -7,10 +7,8 @@ class AddProduct extends Component {
          /* Initialize the state. */
          this.state = {
             newProduct: {
-                title: '',
-                description: '',
-                price: 0,
-                availability: 0
+                name: '',
+                detail: '',
             }
           }
        
@@ -38,33 +36,22 @@ class AddProduct extends Component {
     }
    
     render() {
-      const divStyle = {
-          /*Code omitted for brevity */ }
        
       return(
         <div> 
           <h2> Add new product </h2>
-          <div style={divStyle}> 
-          /*when Submit button is pressed, the control is passed to 
-           *handleSubmit method 
-           */
           <form onSubmit={this.handleSubmit}>
-            <label> Title: 
+            <label> name: 
              { /*On every keystroke, the handeInput method is invoked */ }
-              <input type="text" onChange={(e)=>this.handleInput('title',e)} />
+              <input type="string" onChange={(e)=>this.handleInput('name',e)} />
             </label>
              
-            <label> Description: 
-              <input type="text" onChange={(e)=>this.handleInput('description',e)} />
+            <label> detail: 
+              <input type="text" onChange={(e)=>this.handleInput('detail',e)} />
             </label>
-             
-            <label> Price: 
-              <input type="text" onChange={(e)=>this.handleInput('price',e)} />
-            </label>
-   
+               
             <input type="submit" value="Submit" />
           </form>
-        </div>
       </div>)
     }
   }

@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth:api']], function () {
  
 Route::get('products', 'ProductsController@index');
  
-Route::get('products/{product}', 'ProductsController@show');
+//Route::get('products/{product}', 'ProductsController@show');
  
 Route::post('products', 'ProductsController@store');
  
