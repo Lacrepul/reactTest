@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Note from './project/note.js';
 import Home from './project/home.js';
 import Register from './project/register.js';
-import NotFound from './project/notfound.js';
-import Prod from './project/prod.js';
+import Profile from './project/profile.js';
 
 ReactDOM.render(
     <Router>
@@ -14,7 +13,7 @@ ReactDOM.render(
                 <Route exact path="/" component={Home} />
                 <Route path="/register" component={Register} />
                 <Route path="/note" component={Note} />
-                <Route component={NotFound} />
+                <Route path="/profile" component={Profile} />
             </Switch>
         </div>
     </Router>,

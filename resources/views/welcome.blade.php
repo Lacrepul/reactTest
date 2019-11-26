@@ -23,10 +23,26 @@
             .btn{
                 width:270px;
             }
+            #logoutButt{
+                position:fixed; 
+                width:100px;
+            }
+            #profileButt{
+                position:fixed;
+                right:0;
+                width:100px;
+            }
+            li {
+                list-style-type: none; /* Убираем маркеры */
+                margin-bottom: 15px;
+            }
+            ul {
+                margin-left: 0; /* Отступ слева в браузере IE и Opera */
+                padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+            }
         </style>
     </head>
     <body>
-        <div id="header" class="text">NOTEBOOK</div>
         <div id="app"></div>
         <script src="{{mix('js/marsh.js')}}" ></script>
     </body>
