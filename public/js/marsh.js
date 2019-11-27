@@ -36859,7 +36859,8 @@ function (_Component) {
     _this.state = {
       newProduct: {
         name: '',
-        detail: ''
+        detail: '',
+        username: ''
       }
     }; //Boilerplate code for binding methods with `this`
 
@@ -36867,10 +36868,26 @@ function (_Component) {
     _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
     return _this;
   }
-  /* This method dynamically accepts inputs and stores it in the state */
-
 
   _createClass(AddProduct, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch('username').then(function (response) {
+        return response.text();
+      }).then(function (username) {
+        //Fetched product is stored in the state
+        _this2.setState({
+          newProduct: {
+            'nameUser': username
+          }
+        });
+      });
+    }
+    /* This method dynamically accepts inputs and stores it in the state */
+
+  }, {
     key: "handleInput",
     value: function handleInput(key, e) {
       /*Duplicating and updating the state */
@@ -36896,19 +36913,19 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " Add new product "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " name:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "string",
         onChange: function onChange(e) {
-          return _this2.handleInput('name', e);
+          return _this3.handleInput('name', e);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " detail:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: function onChange(e) {
-          return _this2.handleInput('detail', e);
+          return _this3.handleInput('detail', e);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
@@ -36953,6 +36970,121 @@ var Product = function Product(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Product);
+
+/***/ }),
+
+/***/ "./resources/js/project/UpdateProduct.js":
+/*!***********************************************!*\
+  !*** ./resources/js/project/UpdateProduct.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Update =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Update, _Component);
+
+  function Update(props) {
+    var _this;
+
+    _classCallCheck(this, Update);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Update).call(this, props));
+    _this.state = {
+      newProduct: {
+        name: '',
+        detail: '',
+        username: ''
+      }
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Update, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch('username').then(function (response) {
+        return response.text();
+      }).then(function (username) {
+        _this2.setState({
+          newProduct: {
+            'nameUser': username
+          }
+        });
+      });
+    }
+  }, {
+    key: "handleInput",
+    value: function handleInput(key, e) {
+      var state = Object.assign({}, this.state.newProduct);
+      state[key] = e.target.value;
+      this.setState({
+        newProduct: state
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      this.props.onUPD(this.state.newProduct);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " Update product "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " name:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "string",
+        onChange: function onChange(e) {
+          return _this3.handleInput('name', e);
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " detail:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        onChange: function onChange(e) {
+          return _this3.handleInput('detail', e);
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Submit"
+      })));
+    }
+  }]);
+
+  return Update;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Update);
 
 /***/ }),
 
@@ -37157,11 +37289,16 @@ function (_React$Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Note; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _Product_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Product.js */ "./resources/js/project/Product.js");
-/* harmony import */ var _AddProduct_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddProduct.js */ "./resources/js/project/AddProduct.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _Product_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Product.js */ "./resources/js/project/Product.js");
+/* harmony import */ var _AddProduct_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AddProduct.js */ "./resources/js/project/AddProduct.js");
+/* harmony import */ var _UpdateProduct_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UpdateProduct.js */ "./resources/js/project/UpdateProduct.js");
+
+
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37185,6 +37322,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Note =
 /*#__PURE__*/
 function (_React$Component) {
@@ -37199,23 +37337,29 @@ function (_React$Component) {
 
     _this.state = {
       products: [],
-      currentProduct: null
+      currentProduct: null,
+      username: '',
+      textArea: false
     };
     _this.handleAddProduct = _this.handleAddProduct.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    _this.handleUpdate = _this.handleUpdate.bind(_assertThisInitialized(_this));
     return _this;
   }
-  /*componentDidMount() is a lifecycle method
-   * that gets called after the component is rendered
-   */
-
 
   _createClass(Note, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
-      /* fetch API in action */
+      fetch('username').then(function (response) {
+        return response.text();
+      }).then(function (username) {
+        //Fetched product is stored in the state
+        _this2.setState({
+          username: username
+        });
+      });
       fetch('/api/products').then(function (response) {
         return response.json();
       }).then(function (products) {
@@ -37262,22 +37406,49 @@ function (_React$Component) {
       var _this4 = this;
 
       return this.state.products.map(function (product) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: product.id,
-          onClick: function onClick() {
-            return _this4.handleClick(product);
-          }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "button",
-          className: "btn btn-outline-secondary",
-          style: {
-            width: 200
-          },
-          id: "inputNameId",
-          name: "inputNameName",
-          value: product.name,
-          readOnly: true
-        }));
+        var key = product.id;
+
+        if (_this4.state.username == product.nameUser) {
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+            key: key,
+            style: {
+              textAlign: 'left'
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "btn-group",
+            role: "group",
+            "aria-label": "Basic example",
+            style: {
+              boxSizing: 'border-box'
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+            type: "button",
+            className: "btn btn-secondary",
+            onClick: function onClick() {
+              return _this4.handleDelete(product);
+            },
+            style: {
+              width: 80
+            }
+          }, "Delete"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+            type: "button",
+            className: "btn btn-outline-secondary",
+            onClick: function onClick() {
+              return _this4.handleClick(product);
+            },
+            value: product.name,
+            style: {
+              paddingRight: 20,
+              paddingLeft: 20
+            }
+          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+            type: "button",
+            className: "btn btn-secondary",
+            style: {
+              width: 80
+            }
+          }, "Update")));
+        }
       });
     }
   }, {
@@ -37287,14 +37458,17 @@ function (_React$Component) {
       this.setState({
         currentProduct: product
       });
+      this.setState({
+        textArea: true
+      });
     }
   }, {
     key: "handleDelete",
-    value: function handleDelete() {
+    value: function handleDelete(product) {
       var _this5 = this;
 
-      var currentProduct = this.state.currentProduct;
-      fetch('api/products/' + this.state.currentProduct.id, {
+      var currentProduct = product;
+      fetch('api/products/' + product.id, {
         method: 'delete'
       }).then(function (response) {
         var array = _this5.state.products.filter(function (item) {
@@ -37306,6 +37480,49 @@ function (_React$Component) {
           currentProduct: null
         });
       });
+    }
+  }, {
+    key: "handleUpdate",
+    value: function handleUpdate(product) {
+      var currentProduct, response, array, result;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function handleUpdate$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              currentProduct = this.state.currentProduct;
+              _context.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('api/products/' + currentProduct.id, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify(product)
+              }));
+
+            case 3:
+              response = _context.sent;
+              array = this.state.products.filter(function (item) {
+                return item !== currentProduct;
+              });
+              _context.next = 7;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(response.json());
+
+            case 7:
+              result = _context.sent;
+              this.setState(function () {
+                return {
+                  products: array.concat(result),
+                  currentProduct: result
+                };
+              });
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
     } //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   }, {
@@ -37313,52 +37530,52 @@ function (_React$Component) {
     value: function render() {
       var _this6 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      var textArea = this.state.textArea;
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, JSON.stringify(this.state.currentProduct)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
         action: "logout",
         method: "POST"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-outline-info",
         id: "logoutButt"
-      }, "Logout")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Logout")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/profile",
         className: "btn btn-outline-success",
         id: "profileButt"
-      }, "Profile"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Profile"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         id: "header",
         className: "text"
-      }, "NOTEBOOK"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "NOTEBOOK"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "row",
         style: {
           marginTop: 100
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
         className: "list-group"
-      }, this.renderProducts())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, this.renderProducts())), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "col-7"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
+        className: "list-group"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Product_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        product: this.state.currentProduct
+      }))))), textArea == true && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UpdateProduct_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onUPD: this.handleUpdate
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        onAdd: this.handleAddProduct
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         onClick: function onClick() {
           return _this6.handleDelete();
         }
-      }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        onAdd: this.handleAddProduct
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-7"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "btn btn-success btn-block",
-        id: "textareaHeader"
-      }, "Your Note"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "list-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Product_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        product: this.state.currentProduct
-      }))))));
+      }, "Delete"));
     }
   }]);
 
   return Note;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
 
 
 
