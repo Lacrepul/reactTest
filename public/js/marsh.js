@@ -37289,12 +37289,16 @@ function (_React$Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Note; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _Product_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Product.js */ "./resources/js/project/Product.js");
-/* harmony import */ var _AddProduct_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddProduct.js */ "./resources/js/project/AddProduct.js");
-/* harmony import */ var _UpdateProduct_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UpdateProduct.js */ "./resources/js/project/UpdateProduct.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _Product_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Product.js */ "./resources/js/project/Product.js");
+/* harmony import */ var _AddProduct_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AddProduct.js */ "./resources/js/project/AddProduct.js");
+/* harmony import */ var _UpdateProduct_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UpdateProduct.js */ "./resources/js/project/UpdateProduct.js");
+
+
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37334,7 +37338,8 @@ function (_React$Component) {
     _this.state = {
       products: [],
       currentProduct: null,
-      username: ''
+      username: '',
+      textArea: false
     };
     _this.handleAddProduct = _this.handleAddProduct.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
@@ -37401,25 +37406,48 @@ function (_React$Component) {
       var _this4 = this;
 
       return this.state.products.map(function (product) {
-        var key = product.name;
+        var key = product.id;
 
         if (_this4.state.username == product.nameUser) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
             key: key,
-            onClick: function onClick() {
-              return _this4.handleClick(product);
+            style: {
+              textAlign: 'left'
             }
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, key), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "btn-group",
+            role: "group",
+            "aria-label": "Basic example",
+            style: {
+              boxSizing: 'border-box'
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+            type: "button",
+            className: "btn btn-secondary",
+            onClick: function onClick() {
+              return _this4.handleDelete(product);
+            },
+            style: {
+              width: 80
+            }
+          }, "Delete"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
             type: "button",
             className: "btn btn-outline-secondary",
-            style: {
-              width: 200
+            onClick: function onClick() {
+              return _this4.handleClick(product);
             },
-            id: "inputNameId",
-            name: "inputNameName",
             value: product.name,
-            readOnly: true
-          }));
+            style: {
+              paddingRight: 20,
+              paddingLeft: 20
+            }
+          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+            type: "button",
+            className: "btn btn-secondary",
+            style: {
+              width: 80
+            }
+          }, "Update")));
         }
       });
     }
@@ -37430,14 +37458,17 @@ function (_React$Component) {
       this.setState({
         currentProduct: product
       });
+      this.setState({
+        textArea: true
+      });
     }
   }, {
     key: "handleDelete",
-    value: function handleDelete() {
+    value: function handleDelete(product) {
       var _this5 = this;
 
-      var currentProduct = this.state.currentProduct;
-      fetch('api/products/' + this.state.currentProduct.id, {
+      var currentProduct = product;
+      fetch('api/products/' + product.id, {
         method: 'delete'
       }).then(function (response) {
         var array = _this5.state.products.filter(function (item) {
@@ -37453,87 +37484,98 @@ function (_React$Component) {
   }, {
     key: "handleUpdate",
     value: function handleUpdate(product) {
-      var _this6 = this;
+      var currentProduct, response, array, result;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function handleUpdate$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              currentProduct = this.state.currentProduct;
+              _context.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('api/products/' + currentProduct.id, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                method: 'PUT',
+                body: JSON.stringify(product)
+              }));
 
-      var currentProduct = this.state.currentProduct;
-      fetch('api/products/' + currentProduct.id, {
-        method: 'put',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(product)
-      }).then(function (response) {
-        return response.json();
-      }) /////
-      .then(function (data) {
-        /* Updating the state */
-        var array = _this6.state.products.filter(function (item) {
-          return item != currentProduct;
-        });
+            case 3:
+              response = _context.sent;
+              array = this.state.products.filter(function (item) {
+                return item !== currentProduct;
+              });
+              _context.next = 7;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(response.json());
 
-        _this6.setState(function (prevState) {
-          return {
-            products: array.concat(product),
-            currentProduct: product
-          };
-        });
-      });
+            case 7:
+              result = _context.sent;
+              this.setState(function () {
+                return {
+                  products: array.concat(result),
+                  currentProduct: result
+                };
+              });
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
     } //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   }, {
     key: "render",
     value: function render() {
-      var _this7 = this;
+      var _this6 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, JSON.stringify(this.state.currentProduct)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      var textArea = this.state.currentProduct;
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, JSON.stringify(this.state.currentProduct)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
         action: "logout",
         method: "POST"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-outline-info",
         id: "logoutButt"
-      }, "Logout")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Logout")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/profile",
         className: "btn btn-outline-success",
         id: "profileButt"
-      }, "Profile"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Profile"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         id: "header",
         className: "text"
-      }, "NOTEBOOK"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "NOTEBOOK"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "row",
         style: {
           marginTop: 100
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
         className: "list-group"
-      }, this.renderProducts())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this7.handleDelete();
-        }
-      }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        onAdd: this.handleAddProduct
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UpdateProduct_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        onUPD: this.handleUpdate
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.renderProducts())), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-7"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "btn btn-success btn-block",
-        id: "textareaHeader"
-      }, "Your Note"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
         className: "list-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Product_js__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Product_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
         product: this.state.currentProduct
-      }))))));
+      }))))), textArea != null && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UpdateProduct_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onUPD: this.handleUpdate
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        onAdd: this.handleAddProduct
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this6.handleDelete();
+        }
+      }, "Delete"));
     }
   }]);
 
   return Note;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
 
 
 

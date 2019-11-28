@@ -15,6 +15,7 @@ export default class Note extends React.Component{
               products: [],
               currentProduct: null,
               username: '',
+              textArea: false,
           }
           this.handleAddProduct = this.handleAddProduct.bind(this);
           this.handleDelete = this.handleDelete.bind(this);
@@ -71,12 +72,15 @@ export default class Note extends React.Component{
               */
         renderProducts() {
             return this.state.products.map(product => {
-                let key = product.name;
+                let key = product.id;
                 if(this.state.username == product.nameUser){
                     return (
-                        <li key={key} onClick={() =>this.handleClick(product)}>
-                            <div>{key}</div>
-                            <input type="button" className="btn btn-outline-secondary" style={{width:200}} id="inputNameId" name="inputNameName" value={product.name} readOnly></input>
+                        <li key={key} style={{textAlign:'left'}}>
+                            <div className="btn-group"  role="group" aria-label="Basic example" style={{boxSizing: 'border-box'}}>
+                            <button type="button" className="btn btn-secondary" onClick={() =>(this.handleDelete(product))} style={{width:80}}>Delete</button>
+                            <input type="button" className="btn btn-outline-secondary" onClick={() =>(this.handleClick(product))} value={product.name} style={{paddingRight:20, paddingLeft:20}}></input>
+                            <button type="button" className="btn btn-secondary" style={{width:80}}>Update</button>
+                            </div>
                         </li>
                     );
                 }
@@ -85,13 +89,13 @@ export default class Note extends React.Component{
       
           handleClick(product) {
             //handleClick is used to set the state
-            this.setState({currentProduct:product});  
+            this.setState({currentProduct:product});
+            this.setState({textArea: true});
           }
       
-          handleDelete() {
-          
-            const currentProduct = this.state.currentProduct;
-            fetch( 'api/products/' + this.state.currentProduct.id, 
+          handleDelete(product) {
+            const currentProduct = product;
+            fetch( 'api/products/' + product.id, 
                 { method: 'delete' })
                 .then(response => {
     
@@ -104,34 +108,29 @@ export default class Note extends React.Component{
                 });
           }
 
-          handleUpdate(product) {
- 
+          async handleUpdate(product){
             const currentProduct = this.state.currentProduct;
-            fetch( 'api/products/' + currentProduct.id, {
-                method:'put',
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(product)
+    
+            let response = await fetch('api/products/' + currentProduct.id, {
+            headers : 
+            {'Content-Type': 'application/json',
+            'Accept': 'application/json'},
+            method: 'PUT',
+            body: JSON.stringify(product),
             })
-            .then(response => {
-                return response.json();
+            var array = this.state.products.filter(function(item) {
+                return item !== currentProduct
             })
-            /////
-            .then( data => {
-                /* Updating the state */
-                var array = this.state.products.filter(function(item) {
-                  return item != currentProduct
-              })
-                this.setState((prevState)=> ({
-                    products: array.concat(product),
-                    currentProduct : product
-                }))
-            }) 
-          }
+            let result = await response.json();
+            this.setState(() =>({
+                products: array.concat(result),
+                currentProduct : result
+            }))
+            }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     render(){
+        let textArea = this.state.currentProduct; 
         return <div>
             <div>{JSON.stringify(this.state.currentProduct)}</div>
                     <form action="logout" method="POST">
@@ -144,6 +143,7 @@ export default class Note extends React.Component{
                         <Link to='/profile' className="btn btn-outline-success" id="profileButt">
                             Profile
                         </Link>
+
                         <div id="header" className="text">NOTEBOOK</div>
                         <div className="row" style={{marginTop:100}}>
                             
@@ -152,11 +152,8 @@ export default class Note extends React.Component{
                                     { this.renderProducts() }
                                 </ul>
                             </div> 
-                            <button onClick={() =>this.handleDelete()}>Delete</button>
-                            <AddProduct onAdd={this.handleAddProduct}/>
-                            <Update onUPD={this.handleUpdate}/>
+
                             <div className="col-7">
-                                <div className="btn btn-success btn-block" id="textareaHeader">Your Note</div>
                                 <ul className="list-group">
                                     <Product product={this.state.currentProduct} />
                                 </ul>
@@ -164,6 +161,9 @@ export default class Note extends React.Component{
 
                         </div>
                     </div>
+                    {textArea != null && <Update onUPD={this.handleUpdate}/>}
+                    <AddProduct onAdd={this.handleAddProduct}/>
+                    <button onClick={() =>this.handleDelete()}>Delete</button>
                </div>
     }
 }
