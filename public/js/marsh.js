@@ -37339,7 +37339,8 @@ function (_React$Component) {
       products: [],
       currentProduct: null,
       username: '',
-      textArea: false
+      textArea: false,
+      createArea: false
     };
     _this.handleAddProduct = _this.handleAddProduct.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
@@ -37423,7 +37424,8 @@ function (_React$Component) {
             }
           }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
             type: "button",
-            className: "btn btn-secondary",
+            "aria-pressed": "true",
+            className: "btn btn-secondary active",
             onClick: function onClick() {
               return _this4.handleDelete(product);
             },
@@ -37443,7 +37445,11 @@ function (_React$Component) {
             }
           }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
             type: "button",
-            className: "btn btn-secondary",
+            "aria-pressed": "true",
+            className: "btn btn-secondary active",
+            onClick: function onClick() {
+              return _this4.clickUPD(product);
+            },
             style: {
               width: 80
             }
@@ -37452,14 +37458,44 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "handleClick",
-    value: function handleClick(product) {
-      //handleClick is used to set the state
+    key: "clickUPD",
+    value: function clickUPD(product) {
+      var prevCurrentProduct = this.state.currentProduct;
       this.setState({
         currentProduct: product
       });
+
+      if (prevCurrentProduct != this.state.currentProduct && this.state.textArea == true) {
+        //prev1 != current2 && true
+        this.setState({
+          textArea: true
+        });
+      } else if (this.state.textArea == false) {
+        this.setState({
+          textArea: true
+        });
+      } else if (prevCurrentProduct == product && this.state.textArea == true) {
+        this.setState({
+          textArea: false
+        });
+      }
+      /*else if ((this.state.textArea == false)){
+         this.setState({textArea : true});
+      }*/
+
+    }
+  }, {
+    key: "handleClick",
+    value: function handleClick(product) {
       this.setState({
-        textArea: true
+        textArea: false
+      });
+      this.setState({
+        createArea: false
+      }); //handleClick is used to set the state
+
+      this.setState({
+        currentProduct: product
       });
     }
   }, {
@@ -37467,6 +37503,12 @@ function (_React$Component) {
     value: function handleDelete(product) {
       var _this5 = this;
 
+      this.setState({
+        textArea: false
+      });
+      this.setState({
+        createArea: false
+      });
       var currentProduct = product;
       fetch('api/products/' + product.id, {
         method: 'delete'
@@ -37480,6 +37522,19 @@ function (_React$Component) {
           currentProduct: null
         });
       });
+    }
+  }, {
+    key: "clickCreate",
+    value: function clickCreate() {
+      if (this.state.createArea == false) {
+        this.setState({
+          createArea: true
+        });
+      } else {
+        this.setState({
+          createArea: false
+        });
+      }
     }
   }, {
     key: "handleUpdate",
@@ -37530,21 +37585,64 @@ function (_React$Component) {
     value: function render() {
       var _this6 = this;
 
-      var textArea = this.state.currentProduct;
-      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, JSON.stringify(this.state.currentProduct)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
+      var createArea = this.state.createArea;
+      var textArea = this.state.textArea;
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("nav", {
+        "class": "navbar navbar-expand-lg navbar-light bg-light"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        "class": "navbar-toggler",
+        type: "button",
+        "data-toggle": "collapse",
+        "data-target": "#navbarSupportedContent",
+        "aria-controls": "navbarSupportedContent",
+        "aria-expanded": "false",
+        "aria-label": "Toggle navigation"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+        "class": "navbar-toggler-icon"
+      })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        "class": "collapse navbar-collapse",
+        id: "navbarSupportedContent"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
+        "class": "navbar-nav mr-auto"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+        "class": "nav-item active"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+        "class": "nav-link",
+        href: "#"
+      }, "Home ", react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+        "class": "sr-only"
+      }, "(current)"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+        "class": "nav-item"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+        "class": "nav-link",
+        href: "#"
+      }, "Link")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+        "class": "nav-item dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+        "class": "nav-link dropdown-toggle",
+        href: "#",
+        id: "navbarDropdown",
+        role: "button",
+        "data-toggle": "dropdown",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Menu"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        "class": "dropdown-menu",
+        "aria-labelledby": "navbarDropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "/profile",
+        className: "btn btn-outline-success"
+      }, "Profile"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        "class": "dropdown-divider"
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
         action: "logout",
         method: "POST"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "submit",
-        className: "btn btn-outline-info",
-        id: "logoutButt"
-      }, "Logout")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "btn btn-outline-info"
+      }, "Logout"))))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-        to: "/profile",
-        className: "btn btn-outline-success",
-        id: "profileButt"
-      }, "Profile"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         id: "header",
         className: "text"
       }, "NOTEBOOK"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -37560,17 +37658,34 @@ function (_React$Component) {
         className: "col-7"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
         className: "list-group"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "alert alert-dark",
+        style: {
+          height: 150
+        },
+        role: "alert"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Product_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
         product: this.state.currentProduct
-      }))))), textArea != null && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UpdateProduct_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        onUPD: this.handleUpdate
-      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        onAdd: this.handleAddProduct
-      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+      })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "col-sm"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this6.handleDelete();
-        }
-      }, "Delete"));
+          return _this6.clickCreate();
+        },
+        type: "button",
+        id: "createButt",
+        className: "btn btn-outline-info btn-block"
+      }, "Create new Note")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "col-sm"
+      }, textArea != false && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UpdateProduct_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onUPD: this.handleUpdate
+      }), createArea != false && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        onAdd: this.handleAddProduct
+      }))))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "container"
+      }));
     }
   }]);
 
