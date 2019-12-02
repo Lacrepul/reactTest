@@ -35,24 +35,27 @@ class Update extends Component {
       e.preventDefault();
       this.props.onUPD(this.state.newProduct);
     }
+
+    refreshInputs(){
+      nameId.value = '';
+      detailId.value = '';
+    }
    
     render() {
-       
-      return(
-        <div> 
-          <h2> Update product </h2>
-          <form onSubmit={this.handleSubmit}>
-            <label> name: 
-              <input type="string" onChange={(e)=>this.handleInput('name',e)} />
-            </label>
-             
-            <label> detail: 
-              <input type="text" onChange={(e)=>this.handleInput('detail',e)} />
-            </label>
-               
-            <input type="submit" value="Submit" />
-          </form>
-      </div>)
+     return(
+            <div> 
+              <form onSubmit={this.handleSubmit}>
+                <ul>
+                  <li style={{marginBottom:0, marginTop: 16}}>
+                      <input className="alert alert-dark" type="string" id="nameId" placeholder="Name" onChange={(e)=>this.handleInput('name',e)} />
+                  </li>
+                  <li style={{margin:0}}>
+                        <input className="alert alert-dark" id="detailId" style={{height:148, width:633, margin:0}} type="text" placeholder="Note" onChange={(e)=>this.handleInput('detail',e)} />
+                  </li>
+                </ul>   
+                <input className="btn btn-outline-secondary btn-block" onClick={()=>this.refreshInputs()} type="submit" value="Update Note" />
+              </form>
+            </div>)
     }
   }
    

@@ -27,8 +27,4 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
-    public function getUser(){
-        return Auth::user()->name;
-    }
 }

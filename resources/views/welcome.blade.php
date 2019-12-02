@@ -43,7 +43,7 @@
                 padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
             }
             #createButt{
-                width:150px;
+                width:635px;
             }
         </style>
     </head>
