@@ -4,7 +4,6 @@ class AddProduct extends Component {
  
     constructor(props) {
       super(props);
-         /* Initialize the state. */
          this.state = {
             newProduct: {
                 name: '',
@@ -14,7 +13,6 @@ class AddProduct extends Component {
           
           }
        
-      //Boilerplate code for binding methods with `this`
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleInput = this.handleInput.bind(this);
     }
@@ -25,46 +23,39 @@ class AddProduct extends Component {
           return response.text();
       })
       .then(username => {
-          //Fetched product is stored in the state
           this.setState({newProduct: {'nameUser' : username}});
       });
     }
      
-    /* This method dynamically accepts inputs and stores it in the state */
     handleInput(key, e) {
-       
-      /*Duplicating and updating the state */
       var state = Object.assign({}, this.state.newProduct); 
       state[key] = e.target.value;
       this.setState({newProduct: state });
     }
-   /* This method is invoked when submit button is pressed */
     handleSubmit(e) {
-      //preventDefault prevents page reload   
       e.preventDefault();
-      /*A call back to the onAdd props. The current
-       *state is passed as a param
-       */
-
       this.props.onAdd(this.state.newProduct);
+    }
+
+    refreshInputs(){
+      nameId.value = '';
+      detailId.value = '';
     }
    
     render() {
        
       return(
         <div> 
-          <h2> Add new product </h2>
           <form onSubmit={this.handleSubmit}>
-            <label> name: 
-             { /*On every keystroke, the handeInput method is invoked */ }
-              <input type="string" onChange={(e)=>this.handleInput('name',e)} />
-            </label>
-             
-            <label> detail: 
-              <input type="text" onChange={(e)=>this.handleInput('detail',e)} />
-            </label>
-               
-            <input type="submit" value="Submit" />
+            <ul>
+              <li style={{marginBottom:0, marginTop: 16}}>
+                  <input className="alert alert-dark" id="nameId" type="string" placeholder="Name" onChange={(e)=>this.handleInput('name',e)} />
+              </li>
+              <li style={{margin:0}}>
+                    <input className="alert alert-dark" id="detailId" style={{height:148, width:633, margin:0}} type="text" placeholder="Note" onChange={(e)=>this.handleInput('detail',e)} />
+              </li>
+            </ul>   
+            <input onClick={()=>this.refreshInputs()} className="btn btn-outline-success btn-block" type="submit" value="Create New Note" />
           </form>
       </div>)
     }

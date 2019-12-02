@@ -36854,16 +36854,13 @@ function (_Component) {
     _classCallCheck(this, AddProduct);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(AddProduct).call(this, props));
-    /* Initialize the state. */
-
     _this.state = {
       newProduct: {
         name: '',
         detail: '',
         username: ''
       }
-    }; //Boilerplate code for binding methods with `this`
-
+    };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleInput = _this.handleInput.bind(_assertThisInitialized(_this));
     return _this;
@@ -36877,7 +36874,6 @@ function (_Component) {
       fetch('username').then(function (response) {
         return response.text();
       }).then(function (username) {
-        //Fetched product is stored in the state
         _this2.setState({
           newProduct: {
             'nameUser': username
@@ -36885,51 +36881,71 @@ function (_Component) {
         });
       });
     }
-    /* This method dynamically accepts inputs and stores it in the state */
-
   }, {
     key: "handleInput",
     value: function handleInput(key, e) {
-      /*Duplicating and updating the state */
       var state = Object.assign({}, this.state.newProduct);
       state[key] = e.target.value;
       this.setState({
         newProduct: state
       });
     }
-    /* This method is invoked when submit button is pressed */
-
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      //preventDefault prevents page reload   
       e.preventDefault();
-      /*A call back to the onAdd props. The current
-       *state is passed as a param
-       */
-
       this.props.onAdd(this.state.newProduct);
+    }
+  }, {
+    key: "refreshInputs",
+    value: function refreshInputs() {
+      nameId.value = '';
+      detailId.value = '';
     }
   }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " Add new product "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " name:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        style: {
+          marginBottom: 0,
+          marginTop: 16
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "alert alert-dark",
+        id: "nameId",
         type: "string",
+        placeholder: "Name",
         onChange: function onChange(e) {
           return _this3.handleInput('name', e);
         }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " detail:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        style: {
+          margin: 0
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "alert alert-dark",
+        id: "detailId",
+        style: {
+          height: 148,
+          width: 633,
+          margin: 0
+        },
         type: "text",
+        placeholder: "Note",
         onChange: function onChange(e) {
           return _this3.handleInput('detail', e);
         }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onClick: function onClick() {
+          return _this3.refreshInputs();
+        },
+        className: "btn btn-outline-success btn-block",
         type: "submit",
-        value: "Submit"
+        value: "Create New Note"
       })));
     }
   }]);
@@ -37058,25 +37074,55 @@ function (_Component) {
       this.props.onUPD(this.state.newProduct);
     }
   }, {
+    key: "refreshInputs",
+    value: function refreshInputs() {
+      nameId.value = '';
+      detailId.value = '';
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " Update product "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " name:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        style: {
+          marginBottom: 0,
+          marginTop: 16
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "alert alert-dark",
         type: "string",
+        id: "nameId",
+        placeholder: "Name",
         onChange: function onChange(e) {
           return _this3.handleInput('name', e);
         }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " detail:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        style: {
+          margin: 0
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "alert alert-dark",
+        id: "detailId",
+        style: {
+          height: 148,
+          width: 633,
+          margin: 0
+        },
         type: "text",
+        placeholder: "Note",
         onChange: function onChange(e) {
           return _this3.handleInput('detail', e);
         }
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "btn btn-outline-secondary btn-block",
+        onClick: function onClick() {
+          return _this3.refreshInputs();
+        },
         type: "submit",
-        value: "Submit"
+        value: "Update Note"
       })));
     }
   }]);
@@ -37356,7 +37402,6 @@ function (_React$Component) {
       fetch('username').then(function (response) {
         return response.text();
       }).then(function (username) {
-        //Fetched product is stored in the state
         _this2.setState({
           username: username
         });
@@ -37364,20 +37409,16 @@ function (_React$Component) {
       fetch('/api/products').then(function (response) {
         return response.json();
       }).then(function (products) {
-        //Fetched product is stored in the state
         _this2.setState({
           products: products
         });
       });
     }
-    /*Fetch API for post request */
-
   }, {
     key: "handleAddProduct",
     value: function handleAddProduct(product) {
       var _this3 = this;
 
-      //product.price = Number(product.price);
       fetch('api/products/', {
         method: 'post',
         headers: {
@@ -37388,7 +37429,6 @@ function (_React$Component) {
       }).then(function (response) {
         return response.json();
       }).then(function (data) {
-        //update the state of products and currentProduct
         _this3.setState(function (prevState) {
           return {
             products: prevState.products.concat(data),
@@ -37397,10 +37437,6 @@ function (_React$Component) {
         });
       });
     }
-    /* When using list you need to specify a key
-    * attribute that is unique for each list item
-    */
-
   }, {
     key: "renderProducts",
     value: function renderProducts() {
@@ -37460,6 +37496,9 @@ function (_React$Component) {
   }, {
     key: "clickUPD",
     value: function clickUPD(product) {
+      this.setState({
+        createArea: false
+      });
       var prevCurrentProduct = this.state.currentProduct;
       this.setState({
         currentProduct: product
@@ -37479,10 +37518,6 @@ function (_React$Component) {
           textArea: false
         });
       }
-      /*else if ((this.state.textArea == false)){
-         this.setState({textArea : true});
-      }*/
-
     }
   }, {
     key: "handleClick",
@@ -37492,8 +37527,7 @@ function (_React$Component) {
       });
       this.setState({
         createArea: false
-      }); //handleClick is used to set the state
-
+      });
       this.setState({
         currentProduct: product
       });
@@ -37526,6 +37560,10 @@ function (_React$Component) {
   }, {
     key: "clickCreate",
     value: function clickCreate() {
+      this.setState({
+        textArea: false
+      });
+
       if (this.state.createArea == false) {
         this.setState({
           createArea: true
@@ -37606,17 +37644,10 @@ function (_React$Component) {
         "class": "navbar-nav mr-auto"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
         "class": "nav-item active"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         "class": "nav-link",
-        href: "#"
-      }, "Home ", react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
-        "class": "sr-only"
-      }, "(current)"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
-        "class": "nav-item"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
-        "class": "nav-link",
-        href: "#"
-      }, "Link")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+        to: "/register"
+      }, "Register")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
         "class": "nav-item dropdown"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
         "class": "nav-link dropdown-toggle",
@@ -37648,7 +37679,7 @@ function (_React$Component) {
       }, "NOTEBOOK"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "row",
         style: {
-          marginTop: 100
+          marginTop: 50
         }
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-5"
@@ -37661,7 +37692,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "alert alert-dark",
         style: {
-          height: 150
+          height: 150,
+          margin: 0
         },
         role: "alert"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Product_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -37676,16 +37708,19 @@ function (_React$Component) {
         },
         type: "button",
         id: "createButt",
-        className: "btn btn-outline-info btn-block"
-      }, "Create new Note")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "btn btn-outline-success btn-block"
+      }, "Press to create new Note")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-sm"
+      })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        style: {
+          marginLeft: 0
+        },
+        className: "row"
       }, textArea != false && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UpdateProduct_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
         onUPD: this.handleUpdate
       }), createArea != false && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AddProduct_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
         onAdd: this.handleAddProduct
-      }))))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "container"
-      }));
+      }), " "))))));
     }
   }]);
 
@@ -37736,14 +37771,35 @@ function (_React$Component) {
   _inherits(Profile, _React$Component);
 
   function Profile() {
+    var _this;
+
     _classCallCheck(this, Profile);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Profile).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Profile).call(this)); //Initialize the state in the constructor
+
+    _this.state = {
+      profile: {}
+    };
+    return _this;
   }
 
   _createClass(Profile, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch('profile').then(function (response) {
+        return response.json();
+      }).then(function (profile) {
+        _this2.setState({
+          profile: profile
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var profile = this.state.profile;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         action: "logout",
         method: "POST"
@@ -37755,10 +37811,10 @@ function (_React$Component) {
         id: "header",
         className: "text"
       }, "Your Profile"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "container",
+        className: "container",
         id: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "pull-right"
+        className: "pull-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/note",
         className: "btn btn-outline-info",
@@ -37766,13 +37822,13 @@ function (_React$Component) {
           marginBottom: 15
         }
       }, "Back")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "form-group",
+        className: "form-group",
         id: "username"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "form-control",
         name: "usernameProfile",
-        placeholder: "asdsad",
+        placeholder: profile.name,
         readOnly: true
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         method: "POST"
@@ -37783,17 +37839,13 @@ function (_React$Component) {
         className: "form-control",
         value: "",
         name: "email",
-        placeholder: "aasdasd",
+        placeholder: profile.email,
         readOnly: true
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         id: "saveId",
         className: "btn btn-outline-success"
-      }, "Change Password")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "alert alert-light",
-        role: "alert",
-        id: "footer"
-      }, "\xA9Copyright by Poul Vasenev, 2019")));
+      }, "Change Password"))));
     }
   }]);
 
