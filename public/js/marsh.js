@@ -37436,6 +37436,9 @@ function (_React$Component) {
           };
         });
       });
+      this.setState({
+        createArea: false
+      });
     }
   }, {
     key: "renderProducts",
@@ -37609,8 +37612,11 @@ function (_React$Component) {
                   currentProduct: result
                 };
               });
+              this.setState({
+                textArea: false
+              });
 
-            case 9:
+            case 10:
             case "end":
               return _context.stop();
           }
@@ -37626,9 +37632,9 @@ function (_React$Component) {
       var createArea = this.state.createArea;
       var textArea = this.state.textArea;
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("nav", {
-        "class": "navbar navbar-expand-lg navbar-light bg-light"
+        className: "navbar navbar-expand-lg navbar-light bg-light"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
-        "class": "navbar-toggler",
+        className: "navbar-toggler",
         type: "button",
         "data-toggle": "collapse",
         "data-target": "#navbarSupportedContent",
@@ -37636,21 +37642,30 @@ function (_React$Component) {
         "aria-expanded": "false",
         "aria-label": "Toggle navigation"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
-        "class": "navbar-toggler-icon"
+        className: "navbar-toggler-icon"
       })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        "class": "collapse navbar-collapse",
+        className: "collapse navbar-collapse",
         id: "navbarSupportedContent"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
-        "class": "navbar-nav mr-auto"
+        className: "navbar-nav mr-auto"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+<<<<<<< HEAD
         "class": "nav-item active"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         "class": "nav-link",
         to: "/register"
       }, "Register")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
         "class": "nav-item dropdown"
+=======
+        className: "nav-item active"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        className: "nav-link",
+        to: "/register"
+      }, "Register")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+        className: "nav-item dropdown"
+>>>>>>> 082670ebcad4abf7805a76c36f6e7eaab494e42b
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
-        "class": "nav-link dropdown-toggle",
+        className: "nav-link dropdown-toggle",
         href: "#",
         id: "navbarDropdown",
         role: "button",
@@ -37658,13 +37673,13 @@ function (_React$Component) {
         "aria-haspopup": "true",
         "aria-expanded": "false"
       }, "Menu"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        "class": "dropdown-menu",
+        className: "dropdown-menu",
         "aria-labelledby": "navbarDropdown"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/profile",
         className: "btn btn-outline-success"
       }, "Profile"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        "class": "dropdown-divider"
+        className: "dropdown-divider"
       }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
         action: "logout",
         method: "POST"
