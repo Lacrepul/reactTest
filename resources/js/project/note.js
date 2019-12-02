@@ -58,6 +58,7 @@ export default class Note extends React.Component{
                 currentProduct : data
             }))
         })
+        this.setState({createArea : false});
     }
 
     renderProducts() {
@@ -137,6 +138,7 @@ export default class Note extends React.Component{
         products: array.concat(result),
         currentProduct : result
         }))
+        this.setState({textArea : false});
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,25 +146,25 @@ export default class Note extends React.Component{
         let createArea = this.state.createArea;
         let textArea = this.state.textArea; 
         return <div>
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
                         </button>
 
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="nav-item active">
-                                    <Link class="nav-link" to="/register">Register</Link>
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <Link className="nav-link" to="/register">Register</Link>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Menu
                                     </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <Link to='/profile' className="btn btn-outline-success">
                                             Profile
                                         </Link>
-                                        <div class="dropdown-divider"></div>
+                                        <div className="dropdown-divider"></div>
                                         <form action="logout" method="POST">
                                             <button type="submit" className="btn btn-outline-info">
                                                 Logout
