@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link, BrowserRouter}  from 'react-router-dom';
+import { HomeFetch } from './services/HomeFetch.js';
 
 export default class Home extends React.Component{
     
@@ -15,8 +16,8 @@ export default class Home extends React.Component{
     async onSubmit(e){
         e.preventDefault();
         const {email , password} = this.state;
-
-        let response = await fetch('login', {
+        let result = HomeFetch(email, password);
+        /*let response = await fetch('login', {
         headers : 
         {'Content-Type': 'application/json',
         'Accept': 'application/json'},
@@ -32,7 +33,8 @@ export default class Home extends React.Component{
             passwordId.value="";
             this.setState({err: true});
             this.setState({resError : result['errors']['email'][0]});
-        }
+        }*/
+        console.log(result);
     }
         
     onChange(e){
@@ -51,7 +53,7 @@ export default class Home extends React.Component{
                         </div>
                         <Link to="/register" className="btn btn-outline-success">Register</Link>
 
-                        <form onSubmit= {this.onSubmit.bind(this)} id="saveForm" style={{marginTop: 15}} method="POST">
+                        <form onSubmit={this.onSubmit.bind(this)} id="saveForm" style={{marginTop: 15}} method="POST">
                             <div className="form-group">
                                 <input type="email" className="form-control" name="email" id="emailId" placeholder="Email" onChange={this.onChange.bind(this)} required></input>
                             </div>

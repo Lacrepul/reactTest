@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link, BrowserRouter}  from 'react-router-dom';
-import Product  from './Product.js';
-import AddProduct  from './AddProduct.js';
-import Update  from './UpdateProduct.js';
+import Product  from './productOperations/Product.js';
+import AddProduct  from './productOperations/AddProduct.js';
+import Update  from './productOperations/UpdateProduct.js';
 
 
 export default class Note extends React.Component{
@@ -58,10 +58,7 @@ export default class Note extends React.Component{
                 currentProduct : data
             }))
         })
-<<<<<<< HEAD
-=======
         this.setState({createArea : false});
->>>>>>> 082670ebcad4abf7805a76c36f6e7eaab494e42b
     }
 
     renderProducts() {
@@ -141,10 +138,7 @@ export default class Note extends React.Component{
         products: array.concat(result),
         currentProduct : result
         }))
-<<<<<<< HEAD
-=======
         this.setState({textArea : false});
->>>>>>> 082670ebcad4abf7805a76c36f6e7eaab494e42b
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,27 +146,6 @@ export default class Note extends React.Component{
         let createArea = this.state.createArea;
         let textArea = this.state.textArea; 
         return <div>
-<<<<<<< HEAD
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="nav-item active">
-                                    <Link class="nav-link" to="/register">Register</Link>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Menu
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <Link to='/profile' className="btn btn-outline-success">
-                                            Profile
-                                        </Link>
-                                        <div class="dropdown-divider"></div>
-=======
                     <nav className="navbar navbar-expand-lg navbar-light bg-light">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
@@ -192,7 +165,6 @@ export default class Note extends React.Component{
                                             Profile
                                         </Link>
                                         <div className="dropdown-divider"></div>
->>>>>>> 082670ebcad4abf7805a76c36f6e7eaab494e42b
                                         <form action="logout" method="POST">
                                             <button type="submit" className="btn btn-outline-info">
                                                 Logout
