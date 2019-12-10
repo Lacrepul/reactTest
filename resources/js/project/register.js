@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link, BrowserRouter}  from 'react-router-dom';
+import { RegisterFetch } from './services/RegisterFetch';
  
 export default class Register extends React.Component{
 
@@ -24,15 +25,38 @@ export default class Register extends React.Component{
     async onSubmit(e){
         e.preventDefault();
         const {name, email, password, password_confirmation} = this.state;
-        let response = await fetch('register', {
+        let result = RegisterFetch(name, email, password, password_confirmation);
+        let currentComponent = this;
+        result.then(function(result){
+            if (result == '200'){
+                currentComponent.setState({err: false});
+                currentComponent.props.history.push('/note');
+            }else if (result == '500'){
+                nameId.value="";
+                passwordId.value="";
+                emailId.value="";
+                confirmId.value="";
+                currentComponent.setState({resError : 'This Name/Email already exists'});
+                currentComponent.setState({err: true});
+            }else{
+                nameId.value="";
+                passwordId.value="";
+                emailId.value="";
+                confirmId.value="";
+                currentComponent.setState({resError : result[0]});
+                currentComponent.setState({resError2 : result[1]});
+                currentComponent.setState({err: true});
+            }
+        });
+        /*let response = await fetch('register', {
             headers : 
             {'Content-Type': 'application/json',
             'Accept': 'application/json'},
             method: 'POST',
             body: 
             JSON.stringify({name, email, password, password_confirmation})
-            })
-        if(response.status == 200){
+            })*/
+        /*if(response.status == 200){
             this.setState({err: false});
             this.props.history.push('/note');
         }else if(response.status == 500){
@@ -51,7 +75,7 @@ export default class Register extends React.Component{
             this.setState({resError : result['errors']['password'][0]});
             this.setState({resError2 : result['errors']['password'][1]});
             this.setState({err: true});
-        }
+        }*/
     }
 
     render(){

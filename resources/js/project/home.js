@@ -11,30 +11,25 @@ export default class Home extends React.Component{
             password: '',
             resError : '',
         }
+        this.onSubmit = this.onSubmit.bind(this);
     }
     
     async onSubmit(e){
         e.preventDefault();
         const {email , password} = this.state;
         let result = HomeFetch(email, password);
-        /*let response = await fetch('login', {
-        headers : 
-        {'Content-Type': 'application/json',
-        'Accept': 'application/json'},
-        method: 'POST',
-        body: JSON.stringify({email , password}),
-        })
-        if (response.status == 200){
-            this.setState({err: false});
-            this.props.history.push('/note');
-        }else{
-            let result = await response.json();
-            emailId.value="";
-            passwordId.value="";
-            this.setState({err: true});
-            this.setState({resError : result['errors']['email'][0]});
-        }*/
-        console.log(result);
+        let currentComponent = this;
+        result.then(function(result){
+            if(result == "200"){
+                currentComponent.setState({err: false});
+                currentComponent.props.history.push('/note');
+            }else{
+                emailId.value="";
+                passwordId.value="";
+                currentComponent.setState({err: true});
+                currentComponent.setState({resError : result});
+            }
+        });
     }
         
     onChange(e){

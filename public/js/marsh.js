@@ -36842,9 +36842,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -36870,13 +36870,14 @@ function (_React$Component) {
       password: '',
       resError: ''
     };
+    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Home, [{
     key: "onSubmit",
     value: function onSubmit(e) {
-      var _this$state, email, password, result;
+      var _this$state, email, password, result, currentComponent;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function onSubmit$(_context) {
         while (1) {
@@ -36885,27 +36886,26 @@ function (_React$Component) {
               e.preventDefault();
               _this$state = this.state, email = _this$state.email, password = _this$state.password;
               result = Object(_services_HomeFetch_js__WEBPACK_IMPORTED_MODULE_3__["HomeFetch"])(email, password);
-              /*let response = await fetch('login', {
-              headers : 
-              {'Content-Type': 'application/json',
-              'Accept': 'application/json'},
-              method: 'POST',
-              body: JSON.stringify({email , password}),
-              })
-              if (response.status == 200){
-                  this.setState({err: false});
-                  this.props.history.push('/note');
-              }else{
-                  let result = await response.json();
-                  emailId.value="";
-                  passwordId.value="";
-                  this.setState({err: true});
-                  this.setState({resError : result['errors']['email'][0]});
-              }*/
+              currentComponent = this;
+              result.then(function (result) {
+                if (result == "200") {
+                  currentComponent.setState({
+                    err: false
+                  });
+                  currentComponent.props.history.push('/note');
+                } else {
+                  emailId.value = "";
+                  passwordId.value = "";
+                  currentComponent.setState({
+                    err: true
+                  });
+                  currentComponent.setState({
+                    resError: result
+                  });
+                }
+              });
 
-              console.log(result);
-
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -37857,6 +37857,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _services_RegisterFetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/RegisterFetch */ "./resources/js/project/services/RegisterFetch.js");
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -37878,6 +37879,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -37915,7 +37917,7 @@ function (_React$Component) {
   }, {
     key: "onSubmit",
     value: function onSubmit(e) {
-      var _this$state, name, email, password, password_confirmation, response, result;
+      var _this$state, name, email, password, password_confirmation, result, currentComponent;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function onSubmit$(_context) {
         while (1) {
@@ -37923,76 +37925,72 @@ function (_React$Component) {
             case 0:
               e.preventDefault();
               _this$state = this.state, name = _this$state.name, email = _this$state.email, password = _this$state.password, password_confirmation = _this$state.password_confirmation;
-              _context.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('register', {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                  name: name,
-                  email: email,
-                  password: password,
-                  password_confirmation: password_confirmation
-                })
-              }));
-
-            case 4:
-              response = _context.sent;
-
-              if (!(response.status == 200)) {
-                _context.next = 10;
-                break;
-              }
-
-              this.setState({
-                err: false
+              result = Object(_services_RegisterFetch__WEBPACK_IMPORTED_MODULE_3__["RegisterFetch"])(name, email, password, password_confirmation);
+              currentComponent = this;
+              result.then(function (result) {
+                if (result == '200') {
+                  currentComponent.setState({
+                    err: false
+                  });
+                  currentComponent.props.history.push('/note');
+                } else if (result == '500') {
+                  nameId.value = "";
+                  passwordId.value = "";
+                  emailId.value = "";
+                  confirmId.value = "";
+                  currentComponent.setState({
+                    resError: 'This Name/Email already exists'
+                  });
+                  currentComponent.setState({
+                    err: true
+                  });
+                } else {
+                  nameId.value = "";
+                  passwordId.value = "";
+                  emailId.value = "";
+                  confirmId.value = "";
+                  currentComponent.setState({
+                    resError: result[0]
+                  });
+                  currentComponent.setState({
+                    resError2: result[1]
+                  });
+                  currentComponent.setState({
+                    err: true
+                  });
+                }
               });
-              this.props.history.push('/note');
-              _context.next = 29;
-              break;
+              /*let response = await fetch('register', {
+                  headers : 
+                  {'Content-Type': 'application/json',
+                  'Accept': 'application/json'},
+                  method: 'POST',
+                  body: 
+                  JSON.stringify({name, email, password, password_confirmation})
+                  })*/
 
-            case 10:
-              if (!(response.status == 500)) {
-                _context.next = 19;
-                break;
-              }
+              /*if(response.status == 200){
+                  this.setState({err: false});
+                  this.props.history.push('/note');
+              }else if(response.status == 500){
+                  nameId.value="";
+                  passwordId.value="";
+                  emailId.value="";
+                  confirmId.value="";
+                  this.setState({resError : 'This Name/Email already exists'});
+                  this.setState({err: true});
+              }else{
+                  let result = await response.json();
+                  nameId.value="";
+                  passwordId.value="";
+                  emailId.value="";
+                  confirmId.value="";
+                  this.setState({resError : result['errors']['password'][0]});
+                  this.setState({resError2 : result['errors']['password'][1]});
+                  this.setState({err: true});
+              }*/
 
-              nameId.value = "";
-              passwordId.value = "";
-              emailId.value = "";
-              confirmId.value = "";
-              this.setState({
-                resError: 'This Name/Email already exists'
-              });
-              this.setState({
-                err: true
-              });
-              _context.next = 29;
-              break;
-
-            case 19:
-              _context.next = 21;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(response.json());
-
-            case 21:
-              result = _context.sent;
-              nameId.value = "";
-              passwordId.value = "";
-              emailId.value = "";
-              confirmId.value = "";
-              this.setState({
-                resError: result['errors']['password'][0]
-              });
-              this.setState({
-                resError2: result['errors']['password'][1]
-              });
-              this.setState({
-                err: true
-              });
-
-            case 29:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -38108,14 +38106,94 @@ function HomeFetch(email, password) {
 
         case 2:
           response = _context.sent;
-          _context.next = 5;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(response.json());
 
-        case 5:
-          result = _context.sent;
-          return _context.abrupt("return", result);
+          if (!(response.status == 200)) {
+            _context.next = 7;
+            break;
+          }
+
+          return _context.abrupt("return", "200");
 
         case 7:
+          _context.next = 9;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(response.json());
+
+        case 9:
+          result = _context.sent;
+          return _context.abrupt("return", result['errors']['email'][0]);
+
+        case 11:
+        case "end":
+          return _context.stop();
+      }
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/project/services/RegisterFetch.js":
+/*!********************************************************!*\
+  !*** ./resources/js/project/services/RegisterFetch.js ***!
+  \********************************************************/
+/*! exports provided: RegisterFetch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterFetch", function() { return RegisterFetch; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+function RegisterFetch(name, email, password, password_confirmation) {
+  var response, result, results;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function RegisterFetch$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('register', {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+              name: name,
+              email: email,
+              password: password,
+              password_confirmation: password_confirmation
+            })
+          }));
+
+        case 2:
+          response = _context.sent;
+
+          if (!(response.status == 200)) {
+            _context.next = 7;
+            break;
+          }
+
+          return _context.abrupt("return", '200');
+
+        case 7:
+          if (!(response.status == 500)) {
+            _context.next = 11;
+            break;
+          }
+
+          return _context.abrupt("return", '500');
+
+        case 11:
+          _context.next = 13;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(response.json());
+
+        case 13:
+          result = _context.sent;
+          results = [result['errors']['password'][0], result['errors']['password'][1]];
+          return _context.abrupt("return", results);
+
+        case 16:
         case "end":
           return _context.stop();
       }
