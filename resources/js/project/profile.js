@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link, BrowserRouter}  from 'react-router-dom';
+import {Link}  from 'react-router-dom';
+import { GeneralGetUsernameFetch } from './services/GeneralGetUsernameFetch.js';
 
 export default class Profile extends React.Component{
     constructor() {
@@ -11,13 +12,10 @@ export default class Profile extends React.Component{
     }
 
     componentDidMount() {
-        fetch('profile')
-            .then(response => {
-                return response.json();
-            })
-            .then(profile => {
-                this.setState({profile});
-            });
+        let result = GeneralGetUsernameFetch();
+        result.then(profile => {
+            this.setState({profile});
+        });
     }
 
     render(){

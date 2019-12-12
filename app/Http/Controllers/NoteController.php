@@ -14,7 +14,7 @@ class NoteController extends Controller
     }
 
     public function getUser(){
-        return Auth::user()->name;
+        return Auth::user();
     }
 
     public function getProfile(){

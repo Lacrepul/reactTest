@@ -36827,7 +36827,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _services_HomeFetch_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/HomeFetch.js */ "./resources/js/project/services/HomeFetch.js");
+/* harmony import */ var _services_HomeFetchs_HomeFetch_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/HomeFetchs/HomeFetch.js */ "./resources/js/project/services/HomeFetchs/HomeFetch.js");
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -36885,7 +36885,7 @@ function (_React$Component) {
             case 0:
               e.preventDefault();
               _this$state = this.state, email = _this$state.email, password = _this$state.password;
-              result = Object(_services_HomeFetch_js__WEBPACK_IMPORTED_MODULE_3__["HomeFetch"])(email, password);
+              result = Object(_services_HomeFetchs_HomeFetch_js__WEBPACK_IMPORTED_MODULE_3__["HomeFetch"])(email, password);
               currentComponent = this;
               result.then(function (result) {
                 if (result == "200") {
@@ -37001,6 +37001,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _productOperations_Product_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./productOperations/Product.js */ "./resources/js/project/productOperations/Product.js");
 /* harmony import */ var _productOperations_AddProduct_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./productOperations/AddProduct.js */ "./resources/js/project/productOperations/AddProduct.js");
 /* harmony import */ var _productOperations_UpdateProduct_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./productOperations/UpdateProduct.js */ "./resources/js/project/productOperations/UpdateProduct.js");
+/* harmony import */ var _services_GeneralGetUsernameFetch_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/GeneralGetUsernameFetch.js */ "./resources/js/project/services/GeneralGetUsernameFetch.js");
+/* harmony import */ var _services_noteFetchs_NoteGetProductsFetch_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/noteFetchs/NoteGetProductsFetch.js */ "./resources/js/project/services/noteFetchs/NoteGetProductsFetch.js");
+/* harmony import */ var _services_noteFetchs_NoteAddProductFetch_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services/noteFetchs/NoteAddProductFetch.js */ "./resources/js/project/services/noteFetchs/NoteAddProductFetch.js");
+/* harmony import */ var _services_noteFetchs_NoteDeleteFetch__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/noteFetchs/NoteDeleteFetch */ "./resources/js/project/services/noteFetchs/NoteDeleteFetch.js");
+/* harmony import */ var _services_noteFetchs_NoteUpdateFetch__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/noteFetchs/NoteUpdateFetch */ "./resources/js/project/services/noteFetchs/NoteUpdateFetch.js");
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -37027,6 +37032,11 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
+
+
 var Note =
 /*#__PURE__*/
 function (_React$Component) {
@@ -37037,8 +37047,7 @@ function (_React$Component) {
 
     _classCallCheck(this, Note);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Note).call(this)); //Initialize the state in the constructor
-
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Note).call(this));
     _this.state = {
       products: [],
       currentProduct: null,
@@ -37055,58 +37064,46 @@ function (_React$Component) {
   _createClass(Note, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
-      fetch('username').then(function (response) {
-        return response.text();
-      }).then(function (username) {
-        _this2.setState({
-          username: username
+      var currentComponent = this;
+      var resultGetUsername = Object(_services_GeneralGetUsernameFetch_js__WEBPACK_IMPORTED_MODULE_6__["GeneralGetUsernameFetch"])();
+      var resultGetProducts = Object(_services_noteFetchs_NoteGetProductsFetch_js__WEBPACK_IMPORTED_MODULE_7__["NoteGetProductsFetch"])();
+      resultGetUsername.then(function (result) {
+        return currentComponent.setState({
+          username: result
         });
       });
-      fetch('/api/products').then(function (response) {
-        return response.json();
-      }).then(function (products) {
-        _this2.setState({
-          products: products
+      resultGetProducts.then(function (result) {
+        return currentComponent.setState({
+          products: result
         });
       });
     }
   }, {
     key: "handleAddProduct",
     value: function handleAddProduct(product) {
-      var _this3 = this;
-
-      fetch('api/products/', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(product)
-      }).then(function (response) {
-        return response.json();
-      }).then(function (data) {
-        _this3.setState(function (prevState) {
+      var currentComponent = this;
+      var resultAddProduct = Object(_services_noteFetchs_NoteAddProductFetch_js__WEBPACK_IMPORTED_MODULE_8__["NoteAddProductFetch"])(product);
+      resultAddProduct.then(function (result) {
+        return currentComponent.setState(function (prevState) {
           return {
-            products: prevState.products.concat(data),
-            currentProduct: data
+            products: prevState.products.concat(result),
+            currentProduct: result
           };
         });
       });
-      this.setState({
+      currentComponent.setState({
         createArea: false
       });
     }
   }, {
     key: "renderProducts",
     value: function renderProducts() {
-      var _this4 = this;
+      var _this2 = this;
 
       return this.state.products.map(function (product) {
         var key = product.id;
 
-        if (_this4.state.username == product.nameUser) {
+        if (_this2.state.username.name == product.nameUser) {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
             key: key,
             style: {
@@ -37124,7 +37121,7 @@ function (_React$Component) {
             "aria-pressed": "true",
             className: "btn btn-secondary active",
             onClick: function onClick() {
-              return _this4.handleDelete(product);
+              return _this2.handleDelete(product);
             },
             style: {
               width: 80
@@ -37133,7 +37130,7 @@ function (_React$Component) {
             type: "button",
             className: "btn btn-outline-secondary",
             onClick: function onClick() {
-              return _this4.handleClick(product);
+              return _this2.handleClick(product);
             },
             value: product.name,
             style: {
@@ -37145,7 +37142,7 @@ function (_React$Component) {
             "aria-pressed": "true",
             className: "btn btn-secondary active",
             onClick: function onClick() {
-              return _this4.clickUPD(product);
+              return _this2.clickUpdate(product);
             },
             style: {
               width: 80
@@ -37155,8 +37152,8 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "clickUPD",
-    value: function clickUPD(product) {
+    key: "clickUpdate",
+    value: function clickUpdate(product) {
       this.setState({
         createArea: false
       });
@@ -37196,8 +37193,6 @@ function (_React$Component) {
   }, {
     key: "handleDelete",
     value: function handleDelete(product) {
-      var _this5 = this;
-
       this.setState({
         textArea: false
       });
@@ -37205,17 +37200,14 @@ function (_React$Component) {
         createArea: false
       });
       var currentProduct = product;
-      fetch('api/products/' + product.id, {
-        method: 'delete'
-      }).then(function (response) {
-        var array = _this5.state.products.filter(function (item) {
-          return item !== currentProduct;
-        });
-
-        _this5.setState({
-          products: array,
-          currentProduct: null
-        });
+      var currentComponent = this;
+      Object(_services_noteFetchs_NoteDeleteFetch__WEBPACK_IMPORTED_MODULE_9__["NoteDeleteFetch"])(product);
+      var array = currentComponent.state.products.filter(function (item) {
+        return item !== currentProduct;
+      });
+      currentComponent.setState({
+        products: array,
+        currentProduct: null
       });
     }
   }, {
@@ -37238,43 +37230,33 @@ function (_React$Component) {
   }, {
     key: "handleUpdate",
     value: function handleUpdate(product) {
-      var currentProduct, response, array, result;
+      var currentComponent, currentProduct, result, array;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function handleUpdate$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              currentComponent = this;
               currentProduct = this.state.currentProduct;
-              _context.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('api/products/' + currentProduct.id, {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json'
-                },
-                method: 'PUT',
-                body: JSON.stringify(product)
-              }));
-
-            case 3:
-              response = _context.sent;
+              result = Object(_services_noteFetchs_NoteUpdateFetch__WEBPACK_IMPORTED_MODULE_10__["NoteUpdateFetch"])(currentProduct, product);
               array = this.state.products.filter(function (item) {
                 return item !== currentProduct;
               });
-              _context.next = 7;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(response.json());
-
-            case 7:
-              result = _context.sent;
-              this.setState(function () {
-                return {
-                  products: array.concat(result),
-                  currentProduct: result
-                };
+              array = this.state.products.filter(function (item) {
+                return item !== currentProduct;
+              });
+              result.then(function (result) {
+                return currentComponent.setState(function () {
+                  return {
+                    products: array.concat(result),
+                    currentProduct: result
+                  };
+                });
               });
               this.setState({
                 textArea: false
               });
 
-            case 10:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -37285,7 +37267,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this3 = this;
 
       var createArea = this.state.createArea;
       var textArea = this.state.textArea;
@@ -37368,7 +37350,7 @@ function (_React$Component) {
         className: "col-sm"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this6.clickCreate();
+          return _this3.clickCreate();
         },
         type: "button",
         id: "createButt",
@@ -37406,6 +37388,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var C_openServer_OSPanel_domains_blog_resources_js_project_services_GeneralGetUsernameFetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resources/js/project/services/GeneralGetUsernameFetch.js */ "./resources/js/project/services/GeneralGetUsernameFetch.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37426,6 +37409,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var AddProduct =
 /*#__PURE__*/
 function (_Component) {
@@ -37441,7 +37425,7 @@ function (_Component) {
       newProduct: {
         name: '',
         detail: '',
-        username: ''
+        nameUser: ''
       }
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -37452,14 +37436,12 @@ function (_Component) {
   _createClass(AddProduct, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
-      fetch('username').then(function (response) {
-        return response.text();
-      }).then(function (username) {
-        _this2.setState({
+      var resultGetUsername = Object(C_openServer_OSPanel_domains_blog_resources_js_project_services_GeneralGetUsernameFetch_js__WEBPACK_IMPORTED_MODULE_1__["GeneralGetUsernameFetch"])();
+      var currentComponent = this;
+      resultGetUsername.then(function (result) {
+        return currentComponent.setState({
           newProduct: {
-            'nameUser': username
+            nameUser: result.name
           }
         });
       });
@@ -37488,7 +37470,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
@@ -37503,7 +37485,7 @@ function (_Component) {
         type: "string",
         placeholder: "Name",
         onChange: function onChange(e) {
-          return _this3.handleInput('name', e);
+          return _this2.handleInput('name', e);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         style: {
@@ -37520,11 +37502,11 @@ function (_Component) {
         type: "text",
         placeholder: "Note",
         onChange: function onChange(e) {
-          return _this3.handleInput('detail', e);
+          return _this2.handleInput('detail', e);
         }
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onClick: function onClick() {
-          return _this3.refreshInputs();
+          return _this2.refreshInputs();
         },
         className: "btn btn-outline-success btn-block",
         type: "submit",
@@ -37583,6 +37565,7 @@ var Product = function Product(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var C_openServer_OSPanel_domains_blog_resources_js_project_services_GeneralGetUsernameFetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resources/js/project/services/GeneralGetUsernameFetch.js */ "./resources/js/project/services/GeneralGetUsernameFetch.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37603,6 +37586,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Update =
 /*#__PURE__*/
 function (_Component) {
@@ -37618,7 +37602,7 @@ function (_Component) {
       newProduct: {
         name: '',
         detail: '',
-        username: ''
+        nameUser: ''
       }
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -37629,14 +37613,12 @@ function (_Component) {
   _createClass(Update, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
-      fetch('username').then(function (response) {
-        return response.text();
-      }).then(function (username) {
-        _this2.setState({
+      var resultGetUsername = Object(C_openServer_OSPanel_domains_blog_resources_js_project_services_GeneralGetUsernameFetch_js__WEBPACK_IMPORTED_MODULE_1__["GeneralGetUsernameFetch"])();
+      var currentComponent = this;
+      resultGetUsername.then(function (result) {
+        return currentComponent.setState({
           newProduct: {
-            'nameUser': username
+            nameUser: result.name
           }
         });
       });
@@ -37665,7 +37647,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
@@ -37680,7 +37662,7 @@ function (_Component) {
         id: "nameId",
         placeholder: "Name",
         onChange: function onChange(e) {
-          return _this3.handleInput('name', e);
+          return _this2.handleInput('name', e);
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         style: {
@@ -37697,12 +37679,12 @@ function (_Component) {
         type: "text",
         placeholder: "Note",
         onChange: function onChange(e) {
-          return _this3.handleInput('detail', e);
+          return _this2.handleInput('detail', e);
         }
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "btn btn-outline-secondary btn-block",
         onClick: function onClick() {
-          return _this3.refreshInputs();
+          return _this2.refreshInputs();
         },
         type: "submit",
         value: "Update Note"
@@ -37730,6 +37712,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _services_GeneralGetUsernameFetch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/GeneralGetUsernameFetch.js */ "./resources/js/project/services/GeneralGetUsernameFetch.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37747,6 +37730,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -37774,9 +37758,8 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch('profile').then(function (response) {
-        return response.json();
-      }).then(function (profile) {
+      var result = Object(_services_GeneralGetUsernameFetch_js__WEBPACK_IMPORTED_MODULE_2__["GeneralGetUsernameFetch"])();
+      result.then(function (profile) {
         _this2.setState({
           profile: profile
         });
@@ -37857,7 +37840,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _services_RegisterFetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/RegisterFetch */ "./resources/js/project/services/RegisterFetch.js");
+/* harmony import */ var _services_registerFetchs_RegisterFetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/registerFetchs/RegisterFetch */ "./resources/js/project/services/registerFetchs/RegisterFetch.js");
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -37925,7 +37908,7 @@ function (_React$Component) {
             case 0:
               e.preventDefault();
               _this$state = this.state, name = _this$state.name, email = _this$state.email, password = _this$state.password, password_confirmation = _this$state.password_confirmation;
-              result = Object(_services_RegisterFetch__WEBPACK_IMPORTED_MODULE_3__["RegisterFetch"])(name, email, password, password_confirmation);
+              result = Object(_services_registerFetchs_RegisterFetch__WEBPACK_IMPORTED_MODULE_3__["RegisterFetch"])(name, email, password, password_confirmation);
               currentComponent = this;
               result.then(function (result) {
                 if (result == '200') {
@@ -38072,10 +38055,29 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/project/services/HomeFetch.js":
-/*!****************************************************!*\
-  !*** ./resources/js/project/services/HomeFetch.js ***!
-  \****************************************************/
+/***/ "./resources/js/project/services/GeneralGetUsernameFetch.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/project/services/GeneralGetUsernameFetch.js ***!
+  \******************************************************************/
+/*! exports provided: GeneralGetUsernameFetch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GeneralGetUsernameFetch", function() { return GeneralGetUsernameFetch; });
+function GeneralGetUsernameFetch() {
+  var username = fetch('username').then(function (response) {
+    return response.json();
+  });
+  return username;
+}
+
+/***/ }),
+
+/***/ "./resources/js/project/services/HomeFetchs/HomeFetch.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/project/services/HomeFetchs/HomeFetch.js ***!
+  \***************************************************************/
 /*! exports provided: HomeFetch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38132,10 +38134,119 @@ function HomeFetch(email, password) {
 
 /***/ }),
 
-/***/ "./resources/js/project/services/RegisterFetch.js":
-/*!********************************************************!*\
-  !*** ./resources/js/project/services/RegisterFetch.js ***!
-  \********************************************************/
+/***/ "./resources/js/project/services/noteFetchs/NoteAddProductFetch.js":
+/*!*************************************************************************!*\
+  !*** ./resources/js/project/services/noteFetchs/NoteAddProductFetch.js ***!
+  \*************************************************************************/
+/*! exports provided: NoteAddProductFetch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NoteAddProductFetch", function() { return NoteAddProductFetch; });
+function NoteAddProductFetch(product) {
+  var result = fetch('api/products/', {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(product)
+  }).then(function (response) {
+    return response.json();
+  });
+  return result;
+}
+
+/***/ }),
+
+/***/ "./resources/js/project/services/noteFetchs/NoteDeleteFetch.js":
+/*!*********************************************************************!*\
+  !*** ./resources/js/project/services/noteFetchs/NoteDeleteFetch.js ***!
+  \*********************************************************************/
+/*! exports provided: NoteDeleteFetch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NoteDeleteFetch", function() { return NoteDeleteFetch; });
+function NoteDeleteFetch(product) {
+  var result = fetch('api/products/' + product.id, {
+    method: 'delete'
+  }).then(function (response) {
+    return response;
+  });
+  return result;
+}
+
+/***/ }),
+
+/***/ "./resources/js/project/services/noteFetchs/NoteGetProductsFetch.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/project/services/noteFetchs/NoteGetProductsFetch.js ***!
+  \**************************************************************************/
+/*! exports provided: NoteGetProductsFetch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NoteGetProductsFetch", function() { return NoteGetProductsFetch; });
+function NoteGetProductsFetch() {
+  var result = fetch('/api/products').then(function (response) {
+    return response.json();
+  });
+  return result;
+}
+
+/***/ }),
+
+/***/ "./resources/js/project/services/noteFetchs/NoteUpdateFetch.js":
+/*!*********************************************************************!*\
+  !*** ./resources/js/project/services/noteFetchs/NoteUpdateFetch.js ***!
+  \*********************************************************************/
+/*! exports provided: NoteUpdateFetch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NoteUpdateFetch", function() { return NoteUpdateFetch; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+function NoteUpdateFetch(currentProduct, product) {
+  var response;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function NoteUpdateFetch$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('api/products/' + currentProduct.id, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify(product)
+          }));
+
+        case 2:
+          response = _context.sent;
+          return _context.abrupt("return", response.json());
+
+        case 4:
+        case "end":
+          return _context.stop();
+      }
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/project/services/registerFetchs/RegisterFetch.js":
+/*!***********************************************************************!*\
+  !*** ./resources/js/project/services/registerFetchs/RegisterFetch.js ***!
+  \***********************************************************************/
 /*! exports provided: RegisterFetch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, BrowserRouter}  from 'react-router-dom';
-import { RegisterFetch } from './services/RegisterFetch';
+import { RegisterFetch } from './services/registerFetchs/RegisterFetch';
  
 export default class Register extends React.Component{
 

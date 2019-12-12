@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
+import { GeneralGetUsernameFetch } from 'C:/openServer/OSPanel/domains/blog/resources/js/project/services/GeneralGetUsernameFetch.js';
 
 class AddProduct extends Component {
- 
+
     constructor(props) {
       super(props);
-         this.state = {
-            newProduct: {
-                name: '',
-                detail: '',
-                username: '',
-            }
-          
-          }
-       
+      this.state = {
+        newProduct: {
+          name: '',
+          detail: '',
+          nameUser: '',
+        }
+      } 
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleInput = this.handleInput.bind(this);
     }
     
     componentDidMount() {
-      fetch('username')
-      .then(response => {
-          return response.text();
-      })
-      .then(username => {
-          this.setState({newProduct: {'nameUser' : username}});
+      let resultGetUsername = GeneralGetUsernameFetch();
+      let currentComponent = this;
+      resultGetUsername.then(result => {
+        return currentComponent.setState({newProduct: {nameUser : result.name}});
       });
     }
      

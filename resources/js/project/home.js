@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, BrowserRouter}  from 'react-router-dom';
-import { HomeFetch } from './services/HomeFetch.js';
+import { HomeFetch } from './services/HomeFetchs/HomeFetch.js';
 
 export default class Home extends React.Component{
     

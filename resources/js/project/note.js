@@ -3,13 +3,16 @@ import {Link, BrowserRouter}  from 'react-router-dom';
 import Product  from './productOperations/Product.js';
 import AddProduct  from './productOperations/AddProduct.js';
 import Update  from './productOperations/UpdateProduct.js';
-
+import { GeneralGetUsernameFetch } from './services/GeneralGetUsernameFetch.js';
+import { NoteGetProductsFetch } from './services/noteFetchs/NoteGetProductsFetch.js';
+import { NoteAddProductFetch } from './services/noteFetchs/NoteAddProductFetch.js';
+import { NoteDeleteFetch } from './services/noteFetchs/NoteDeleteFetch';
+import { NoteUpdateFetch } from './services/noteFetchs/NoteUpdateFetch';
 
 export default class Note extends React.Component{
  
     constructor() {
         super();
-        //Initialize the state in the constructor
         this.state = {
             products: [],
             currentProduct: null,
@@ -23,54 +26,43 @@ export default class Note extends React.Component{
     }
 
     componentDidMount() {
-        fetch('username')
-            .then(response => {
-                return response.text();
-            })
-            .then(username => {
-                this.setState({username});
-            });
+        let currentComponent = this;
+        let resultGetUsername = GeneralGetUsernameFetch();
+        let resultGetProducts = NoteGetProductsFetch();
 
-        fetch('/api/products')
-            .then(response => {
-                return response.json();
-            })
-            .then(products => {
-                this.setState({products});
-            });
+        resultGetUsername.then(result => {
+            return currentComponent.setState({ username : result });
+        });
+
+        resultGetProducts.then(result => {
+            return currentComponent.setState({ products : result });
+        });
     }
 
     handleAddProduct(product) {
-        fetch( 'api/products/', {
-            method:'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(product)
-        })
-        .then(response => {
-            return response.json();
-        })
-        .then( data => {
-            this.setState((prevState)=> ({
-                products: prevState.products.concat(data),
-                currentProduct : data
-            }))
-        })
-        this.setState({createArea : false});
+        let currentComponent = this;
+        let resultAddProduct = NoteAddProductFetch(product);
+
+        resultAddProduct.then(result => {
+            return  currentComponent.setState((prevState)=> ({
+                        products: prevState.products.concat(result),
+                        currentProduct : result
+                    }));
+        });
+
+        currentComponent.setState({createArea : false});
     }
 
     renderProducts() {
         return this.state.products.map(product => {
             let key = product.id;
-            if(this.state.username == product.nameUser){
+            if(this.state.username.name == product.nameUser){
                 return (
                     <li key={key} style={{textAlign:'left'}}>
                         <div className="btn-group"  role="group" aria-label="Basic example" style={{boxSizing: 'border-box'}}>
                         <button type="button" aria-pressed="true" className="btn btn-secondary active" onClick={() =>(this.handleDelete(product))} style={{width:80}}>Delete</button>
                         <input type="button" className="btn btn-outline-secondary" onClick={() =>(this.handleClick(product))} value={product.name} style={{paddingRight:20, paddingLeft:20}}></input>
-                        <button type="button" aria-pressed="true"  className="btn btn-secondary active" onClick={()=>(this.clickUPD (product))} style={{width:80}}>Update</button>
+                        <button type="button" aria-pressed="true"  className="btn btn-secondary active" onClick={()=>(this.clickUpdate (product))} style={{width:80}}>Update</button>
                         </div>
                     </li>
                 );
@@ -78,7 +70,7 @@ export default class Note extends React.Component{
         })
     }
     
-    clickUPD (product){
+    clickUpdate (product){
         this.setState({createArea : false});
         let prevCurrentProduct = this.state.currentProduct;
         this.setState({currentProduct: product});
@@ -102,14 +94,12 @@ export default class Note extends React.Component{
         this.setState({textArea: false});
         this.setState({createArea: false});
         const currentProduct = product;
-        fetch( 'api/products/' + product.id, 
-            { method: 'delete' })
-            .then(response => {
-                var array = this.state.products.filter(function(item) {
-                    return item !== currentProduct
-                });
-                this.setState({ products: array, currentProduct: null});
-            });
+        let currentComponent = this;
+        NoteDeleteFetch(product);
+        var array = currentComponent.state.products.filter(function(item) {
+            return item !== currentProduct
+        });
+        currentComponent.setState({ products: array, currentProduct: null});
     }
 
     clickCreate(){
@@ -122,22 +112,21 @@ export default class Note extends React.Component{
     }
 
     async handleUpdate(product){
+        let currentComponent = this;
         const currentProduct = this.state.currentProduct;
-        let response = await fetch('api/products/' + currentProduct.id, {
-            headers : 
-            {'Content-Type': 'application/json',
-            'Accept': 'application/json'},
-            method: 'PUT',
-            body: JSON.stringify(product),
-        })
+        let result = NoteUpdateFetch(currentProduct, product);
+        var array = this.state.products.filter(function(item) {
+            return item !== currentProduct
+            })
         var array = this.state.products.filter(function(item) {
         return item !== currentProduct
         })
-        let result = await response.json();
-        this.setState(() =>({
-        products: array.concat(result),
-        currentProduct : result
-        }))
+        result.then(result => {
+            return  currentComponent.setState(() =>({
+                    products: array.concat(result),
+                    currentProduct : result
+                    }))
+        });
         this.setState({textArea : false});
     }
 

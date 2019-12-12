@@ -16,8 +16,5 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('username', 'NoteController@getUser');
-Route::get('profile', 'NoteController@getProfile');
-
 Route::get('/home', 'HomeController@index')->name('home');
